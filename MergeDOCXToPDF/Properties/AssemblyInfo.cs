@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MergeDOCXToPDF")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Merges Microsoft Word DOCX files and converts the merged file to PDF.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("LunarDiver")]
 [assembly: AssemblyProduct("MergeDOCXToPDF")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
