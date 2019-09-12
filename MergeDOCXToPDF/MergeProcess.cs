@@ -48,28 +48,60 @@ namespace MergeDOCXToPDF
 
 		private Dictionary<int, string> GetFileOrder(string[] files)
 		{
-			var dict = new Dictionary<int, string>();
-			for (int i = 0; i < files.Length; i++)
+			while (true)
 			{
-				int id;
-				while (true)
+				var dict = new Dictionary<int, string>();
+				for (int i = 0; i < files.Length; i++)
 				{
-					Console.Write($"\"{files[i]}\": ");
-
-					char pressedKey = Console.ReadKey().KeyChar;
-					Console.WriteLine();
-
-					if (int.TryParse(pressedKey.ToString(), out id))
+					int id;
+					while (true)
 					{
-						break;
+						Console.Write($"\"{files[i]}\": ");
+
+						string pressedKey = Console.ReadLine();
+
+						bool trying = int.TryParse(pressedKey, out id);
+						bool existing = dict.Select(a => a.Key).Contains(id);
+						if (trying && !existing)
+						{
+							break;
+						}
+						else if (!trying)
+						{
+							Console.WriteLine($"{pressedKey} is not a number. Please try again.");
+						}
+						else if (existing)
+						{
+							Console.WriteLine($"{pressedKey} already exists as an ID for another file. Please try again.");
+						}
 					}
 
-					Console.WriteLine($"{pressedKey} is not a number. Please try again.");
+					dict.Add(id, files[i]);
 				}
 
-				dict.Add(id, files[i]);
+				Console.WriteLine("\nListing all files in their correct order...\n");
+
+				foreach (KeyValuePair<int, string> file in dict.OrderBy(a => a.Key))
+				{
+					Console.WriteLine($"{file.Key}: {file.Value}");
+				}
+
+				while (true)
+				{
+					Console.Write("\nIs this order okay? (Y/N) ");
+					var yesno = Console.ReadLine();
+
+					if (yesno.ToLower() == "y")
+					{
+						return dict;
+					}
+					else if (yesno.ToLower() == "n")
+					{
+						Console.WriteLine("\nRestarting sorting process...");
+						break;
+					}
+				}
 			}
-			return dict;
 		}
 
 		private string GetPDFOutputName()
